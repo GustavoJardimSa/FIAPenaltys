@@ -3,7 +3,7 @@
 ## 👥 Equipe
 Alexandre Salcines Messias Pivatti, Gustavo Henrique Jardim de Sá, Guilherme Boerato Medina
 
-## Objetivos
+## 🥅 Objetivos
 Entrega: 40%
 Apresentação: 60%
 
