@@ -1,4 +1,3 @@
-# CÓDIGO ANTIGO COM UMA MATRIZ SIMPLES
 import os
 
 def criar_gol():
@@ -26,7 +25,6 @@ def mostrar_gol(gol):
 
         if linha < 4:
             print('    ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤')
-
     print('    └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘')
 
 def escolher_chute():
@@ -111,18 +109,61 @@ def confirmar_defesa(gol):
             print('Opção inválida. Escolha novamente.')
             gol[linha_defesa][coluna_defesa] = ' '
 
-def main():
-    gol = criar_gol()
-    mostrar_gol(gol)
+def limpar_gol(gol):
+    for linha in range(5):
+        for coluna in range(8):
+            gol[linha][coluna] = ' '
 
-    # ESCOLHA DO BATEDOR
+def executar_cobranca(gol, time_batedor, time_goleiro):
+    limpar_gol(gol)
+
+    print(f'\n{time_batedor} está cobrando!')
+    print(f'\n{time_goleiro} está defendendo!')
+
+    mostrar_gol(gol)
     linha_chute, coluna_chute = confirmar_chute(gol)
 
-    # ESCOLHA DO GOLEIRO
-    print('VEZ DO GOLEIRO')
+    print(f'\nVEZ DO GOLEIRO DO {time_goleiro}')
     mostrar_gol(gol)
 
     linha_defesa, coluna_defesa = confirmar_defesa(gol)
 
+    calcular_chances(gol, linha_defesa, coluna_defesa)
+    chance_defesa = gol[linha_chute][coluna_chute]
+
+    print(f'Chance de defesa: {chance_defesa}%')
+    input('Pressione ENTER para continuar.')
+
+    return linha_chute, coluna_chute, linha_defesa, coluna_defesa
+
+def calcular_chances(gol, linha_defesa, coluna_defesa):
+    for linha in range(5):
+        for coluna in range(8):
+            distancia_linha = abs(linha - linha_defesa)
+            distancia_coluna = abs(coluna - coluna_defesa)
+
+            if distancia_linha == 0 and distancia_coluna == 0:
+                gol[linha][coluna] = 100
+
+            elif distancia_linha <= 1 and distancia_coluna <= 2:
+                gol[linha][coluna] = 80
+
+            elif distancia_linha <= 2 and distancia_coluna <= 3:
+                gol[linha][coluna] = 40
+
+            else:
+                gol[linha][coluna] = 0
+
+def main():
+    gol = criar_gol()
+
+    time_1 = 'Corinthians'
+    time_2 = 'Palmeiras'
+
+    for rodada in range(1,6):
+        print(f'\n========== RODADA {rodada} DE 5 ==========')
+
+        executar_cobranca(gol, time_1, time_2)
+        executar_cobranca(gol, time_2, time_1)
 
 main()
