@@ -1,4 +1,5 @@
 import os
+import random
 
 def criar_gol():
     return [
@@ -114,6 +115,14 @@ def limpar_gol(gol):
         for coluna in range(8):
             gol[linha][coluna] = ' '
 
+def definir_resultado(chance_defesa):
+    numero_sorteado = random.randint(1,100)
+
+    if numero_sorteado <= chance_defesa:
+        return 'DEFESA'
+
+    return 'GOL'
+
 def executar_cobranca(gol, time_batedor, time_goleiro):
     limpar_gol(gol)
 
@@ -131,10 +140,12 @@ def executar_cobranca(gol, time_batedor, time_goleiro):
     calcular_chances(gol, linha_defesa, coluna_defesa)
     chance_defesa = gol[linha_chute][coluna_chute]
 
-    print(f'Chance de defesa: {chance_defesa}%')
+    resultado = definir_resultado(chance_defesa)
+
+    print(f'Resultado da cobrança: {resultado}')
     input('Pressione ENTER para continuar.')
 
-    return linha_chute, coluna_chute, linha_defesa, coluna_defesa
+    return resultado
 
 def calcular_chances(gol, linha_defesa, coluna_defesa):
     for linha in range(5):
