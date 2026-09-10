@@ -123,6 +123,14 @@ def definir_resultado(chance_defesa):
 
     return 'GOL'
 
+def mostrar_placar(time_1, gols_time_1, time_2, gols_time_2):
+    print('\n==============================')
+    print('            PLACAR')
+    print('==============================')
+    print(f'{time_1}: {gols_time_1}')
+    print(f'{time_2}: {gols_time_2}')
+    print('==============================\n')
+
 def executar_cobranca(gol, time_batedor, time_goleiro):
     limpar_gol(gol)
 
@@ -168,13 +176,103 @@ def calcular_chances(gol, linha_defesa, coluna_defesa):
 def main():
     gol = criar_gol()
 
-    time_1 = 'Corinthians'
-    time_2 = 'Palmeiras'
+    print('==========================')
+    print('       FIAPENALTYS')
+    print('==========================')
 
+    time_1 = input('Digite o nome do Time 1: ')
+    time_2 = input('Digite o nome do Time 2: ')
+
+    gols_time_1 = 0
+    gols_time_2 = 0
+
+    #jogo principal
     for rodada in range(1,6):
+
+        os.system('cls')
         print(f'\n========== RODADA {rodada} DE 5 ==========')
 
         executar_cobranca(gol, time_1, time_2)
         executar_cobranca(gol, time_2, time_1)
+
+        mostrar_placar(
+            time_1, gols_time_1,
+            time_2, gols_time_2
+        )
+
+        resultado = executar_cobranca(
+            gol, time_1, time_2
+        )
+
+        if resultado == 'GOL':
+            gols_time_1 += 1
+
+        os.system('cls')
+
+        mostrar_placar(
+            time_1, gols_time_1,
+            time_2, gols_time_2
+        )
+
+        resultado = executar_cobranca(
+            gol, time_2, time_1
+        )
+
+        if resultado == 'GOL':
+            gols_time_2 += 1
+
+    #resultado após jogo
+    os.system('cls')
+
+    mostrar_placar(
+        time_1, gols_time_1,
+        time_2, gols_time_2
+    )
+# alternadas
+    if gols_time_1 == gols_time_2:
+       print('DEU EMPATE! QUE JOGO EMOCIONANTE!')
+       print('AGORA VAMOS PARA AS COBRANÇAS ALTERNADAS') 
+
+       rodada_alternada = 1
+
+       while gols_time_1 == gols_time_2:
+            print(f'\n===== RODADA ALTERNADA {rodada_alternada} =====')
+
+            resultado = executar_cobranca(
+                gol, time_1, time_2
+            )
+
+            if resultado == 'GOL':
+                gols_time_1 += 1
+
+            resultado = executar_cobranca(
+                gol, time_2, time_1
+            )
+            
+            if resultado == 'GOL':
+                gols_time_2 += 1
+
+            mostrar_placar(
+                time_1, gols_time_1,
+                time_2, gols_time_2
+            )
+
+            rodada_alternada += 1
+
+  # definição do vencedor
+    print('\n==============================')
+    print('        FIM DE JOGO')
+    print('==============================')
+
+    mostrar_placar(
+        time_1, gols_time_1,
+        time_2, gols_time_2
+    )
+
+    if gols_time_1 > gols_time_2:
+        print(f'{time_1} SAI VENCEDOR!')
+
+    else:
+        print(f'{time_2} SAI VENCEDOR!')
 
 main()
