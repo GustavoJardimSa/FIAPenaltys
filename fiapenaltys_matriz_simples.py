@@ -172,6 +172,17 @@ def calcular_chances(gol, linha_defesa, coluna_defesa):
             else:
                 gol[linha][coluna] = 0
 
+def verificar_fim_antecipado(gols_time_1, gols_time_2, cobrancas_time_1, cobrancas_time_2):
+    restantes_time_1 = 5 - (cobrancas_time_1)
+    restantes_time_2 = 5 - (cobrancas_time_2)
+
+    if gols_time_1 > gols_time_2 + restantes_time_2:
+        return True
+    if gols_time_2 > gols_time_1 + restantes_time_1:
+        return True
+
+    return False
+
 def main():
     gol = criar_gol()
 
@@ -215,6 +226,9 @@ def main():
             time_2, ''.join(historico_time_2)
         )
 
+        if verificar_fim_antecipado(gols_time_1, gols_time_2, rodada, rodada -1):
+            break
+    
         #COBRANÇA DO TIME 2
         resultado = executar_cobranca(gol, time_2, time_1)
 
@@ -231,6 +245,9 @@ def main():
             time_1, ''.join(historico_time_1),
             time_2, ''.join(historico_time_2)
         )
+
+        if verificar_fim_antecipado(gols_time_1, gols_time_2, rodada, rodada):
+            break
 
         if rodada < 5:
             input('Pressione ENTER para iniciar a próxima rodada.')
