@@ -94,24 +94,25 @@ def marcar_regiao_visual(gol_visual, regiao, simbolo):
     gol_visual[linha_visual][coluna_visual] = simbolo
 
 
-gol_interno = criar_gol()
-gol_visual = criar_gol_visual()
+for cobranca in range(1, 6):
+    print(f'\n===================== COBRANÇA {cobranca} DE 5 =====================')
 
-mostrar_gol(gol_visual)
+    gol_interno = criar_gol()
+    gol_visual = criar_gol_visual()
 
-# DECISÃO BATEDOR
-regiao_batedor = posicao_batedor()
-marcar_regiao_visual(gol_visual, regiao_batedor, 'X CHUTE X')
-mostrar_gol(gol_visual)
+    mostrar_gol(gol_visual)
 
-linha, coluna = sortear_posicao_exata(regiao_batedor)
-gol_interno[linha][coluna] = 'O'
+    regiao_batedor = posicao_batedor()
+    marcar_regiao_visual(gol_visual, regiao_batedor, 'X CHUTE X')
+    mostrar_gol(gol_visual)
 
-# DECISÃO GOLEIRO
-regiao_goleiro = posicao_goleiro()
+    linha, coluna = sortear_posicao_exata(regiao_batedor)
+    gol_interno[linha][coluna] = 'O'
 
-marcar_regiao_visual(gol_visual, regiao_goleiro, 'X GOLEIRO X')
-mostrar_gol(gol_visual)
+    regiao_goleiro = posicao_goleiro()
 
-linha, coluna = sortear_posicao_exata(regiao_goleiro)
-gol_interno[linha][coluna] = 'O'
+    marcar_regiao_visual(gol_visual, regiao_goleiro, 'X GOLEIRO X')
+    mostrar_gol(gol_visual)
+
+    linha, coluna = sortear_posicao_exata(regiao_goleiro)
+    gol_interno[linha][coluna] = 'O'
