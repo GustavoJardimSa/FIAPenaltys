@@ -3,6 +3,28 @@ import random
 
 from gol import mostrar_gol, limpar_gol, calcular_chances
 
+def escolher_modo():
+    while True:
+        try:
+            print('\n1 - LOCAL COM JOGADOR REAL')
+            print('2 - CONTRA BOT')
+
+            modo = int(input('Escolha o modo de jogo: '))
+
+            if modo == 1 or modo == 2:
+                return modo
+
+            print('Modo inválido. Escolha 1 ou 2')
+
+        except ValueError:
+            print('Entrada inválida. Digite somente números.')
+
+def escolher_posicao_bot():
+    linha = random.randint(0, 4)
+    coluna = random.randint(0, 7)
+
+    return linha, coluna
+
 def escolher_chute():
     while True:
         try:
@@ -100,28 +122,37 @@ def mostrar_placar(time_1, gols_time_1, time_2, gols_time_2):
     print(f'{time_2}: {gols_time_2}')
     print('==============================\n')
 
-def executar_cobranca(gol, time_batedor, time_goleiro):
+def executar_cobranca(gol, time_batedor, time_goleiro, controle_batedor, controle_goleiro):
     limpar_gol(gol)
 
     print(f'\n{time_batedor} está cobrando!')
     print(f'\n{time_goleiro} está defendendo!')
 
     mostrar_gol(gol)
-    linha_chute, coluna_chute = confirmar_chute(gol)
+
+    if controle_batedor == 'BOT':
+        linha_chute, coluna_chute = escolher_posicao_bot()
+        print(f'\n{time_batedor} escolheu a posição do chute.')
+        input('Pressione ENTER para o goleiro defender.')
+        os.system('cls')
+    else:
+        linha_chute, coluna_chute = confirmar_chute(gol)
 
     print(f'\nVEZ DO GOLEIRO DO {time_goleiro}')
     mostrar_gol(gol)
 
-    linha_defesa, coluna_defesa = confirmar_defesa(gol)
+    if controle_goleiro == 'BOT':
+        linha_defesa, coluna_defesa = escolher_posicao_bot()
+        print(f'\nO goleiro do {time_goleiro} escolheu a defesa')
+    else:
+        linha_defesa, coluna_defesa = confirmar_defesa(gol)
 
     calcular_chances(gol, linha_defesa, coluna_defesa)
     chance_defesa = gol[linha_chute][coluna_chute]
 
     resultado = definir_resultado(chance_defesa)
-
     print(f'Resultado da cobrança: {resultado}')
     input('Pressione ENTER para continuar.')
-
     return resultado
 
 def verificar_fim_antecipado(gols_time_1, gols_time_2, cobrancas_time_1, cobrancas_time_2):

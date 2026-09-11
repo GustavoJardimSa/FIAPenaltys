@@ -1,7 +1,7 @@
 import os
 
 from gol import criar_gol
-from sistema_jogo import(executar_cobranca, mostrar_placar, verificar_fim_antecipado)
+from sistema_jogo import(executar_cobranca, mostrar_placar, verificar_fim_antecipado, escolher_modo)
 
 def main():
     gol = criar_gol()
@@ -10,8 +10,18 @@ def main():
     print('       FIAPENALTYS')
     print('==========================')
 
+    modo = escolher_modo()
+
     time_1 = input('Digite o nome do Time 1: ')
     time_2 = input('Digite o nome do Time 2: ')
+
+    # CONTROLADORES PRINCIPAIS E INICIAIS
+    controle_time_1 = 'JOGADOR'
+
+    if modo == 1:
+        controle_time_2 = 'JOGADOR'
+    else:
+        controle_time_2 = 'BOT'
 
     gols_time_1 = 0
     gols_time_2 = 0
@@ -20,7 +30,7 @@ def main():
     historico_time_2 = ['-', '-', '-', '-', '-']
 
     #JOGO PRINCIPAL
-    for rodada in range(1,6):
+    for rodada in range(1, 6):
         os.system('cls')
 
         print(f'\n========== RODADA {rodada} DE 5 ==========')
@@ -30,7 +40,7 @@ def main():
         )
 
         #COBRANÇA DO TIME 1
-        resultado = executar_cobranca(gol, time_1, time_2)
+        resultado = executar_cobranca(gol, time_1, time_2, controle_time_1, controle_time_2)
 
         if resultado == 'GOL':
             gols_time_1 += 1
@@ -50,7 +60,7 @@ def main():
             break
     
         #COBRANÇA DO TIME 2
-        resultado = executar_cobranca(gol, time_2, time_1)
+        resultado = executar_cobranca(gol, time_2, time_1, controle_time_2, controle_time_1)
 
         if resultado == 'GOL':
             gols_time_2 += 1
@@ -88,7 +98,7 @@ def main():
             )
 
             #COBRANÇA DO TIME 1
-            resultado = executar_cobranca(gol, time_1, time_2)
+            resultado = executar_cobranca(gol, time_1, time_2, controle_time_1, controle_time_2)
 
             if resultado == 'GOL':
                 gols_time_1 += 1
@@ -105,7 +115,7 @@ def main():
             )
 
             #COBRANÇA DO TIME 2
-            resultado = executar_cobranca(gol, time_2, time_1)
+            resultado = executar_cobranca(gol, time_2, time_1, controle_time_2, controle_time_1)
             
             if resultado == 'GOL':
                 gols_time_2 += 1
