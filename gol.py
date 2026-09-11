@@ -1,3 +1,5 @@
+#MANIPULAÇÃO DE CRIAÇÃO DA MATRIZ
+
 def criar_gol():
     return [
         [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
@@ -25,11 +27,13 @@ def mostrar_gol(gol):
             print('    ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤')
     print('    └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘')
 
+# LIMPAR MATRIZ
 def limpar_gol(gol):
     for linha in range(5):
         for coluna in range(8):
             gol[linha][coluna] = ' '
 
+# LÓGICA PARA PROBABILIDADES DE GOL
 def calcular_chances(gol, linha_defesa, coluna_defesa):
     for linha in range(5):
         for coluna in range(8):

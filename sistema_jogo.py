@@ -19,12 +19,17 @@ def escolher_modo():
         except ValueError:
             print('Entrada inválida. Digite somente números.')
 
+# SISTEMA DO BOT
+
 def escolher_posicao_bot():
     linha = random.randint(0, 4)
     coluna = random.randint(0, 7)
 
     return linha, coluna
 
+# SISTEMA PRINCIPAL (Priorizando modo local com jogador).
+
+# CHUTE E DEFESA
 def escolher_chute():
     while True:
         try:
@@ -107,6 +112,7 @@ def confirmar_defesa(gol):
             print('Opção inválida. Escolha novamente.')
             gol[linha_defesa][coluna_defesa] = ' '
 
+# RESULTADOS
 def definir_resultado(chance_defesa):
     numero_sorteado = random.randint(1,100)
 
@@ -155,6 +161,7 @@ def executar_cobranca(gol, time_batedor, time_goleiro, controle_batedor, control
     input('Pressione ENTER para continuar.')
     return resultado
 
+# LÓGICA PARA CÁLCULO DE MD5 (Melhor de 5)
 def verificar_fim_antecipado(gols_time_1, gols_time_2, cobrancas_time_1, cobrancas_time_2):
     restantes_time_1 = 5 - (cobrancas_time_1)
     restantes_time_2 = 5 - (cobrancas_time_2)
